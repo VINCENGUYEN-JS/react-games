@@ -1,0 +1,27 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: min-content;
+  gap: 5px;
+}
+
+header {
+  display: flex;
+  width: 600px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.board button {
+  width: 200px;
+  height: 200px;
+}
+
+.player {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.player.active {
+  opacity: 1;
+}
