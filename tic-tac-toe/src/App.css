@@ -15,6 +15,15 @@ header {
 .board button {
   width: 200px;
   height: 200px;
+  font-size: 100px;
+  text-transform: uppercase;
+  line-height: 1;
+  background: hsl(120 25% 75%);
+  border: 1px solid hsl(120 50% 50%);
+}
+
+.board button:disabled {
+  color: black;
 }
 
 .player {

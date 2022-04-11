@@ -3,13 +3,53 @@ import "./App.css";
 
 const EMPTY_BOARD = [...Array(9)].map(() => 0);
 
+const WINNING_STATES = [
+  [1, 1, 1, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 1, 1, 1, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 1, 1, 1],
+
+  [1, 0, 0, 1, 0, 0, 1, 0, 0],
+  [0, 1, 0, 0, 1, 0, 0, 1, 0],
+  [0, 0, 1, 0, 0, 1, 0, 0, 1],
+
+  [1, 0, 0, 0, 1, 0, 0, 0, 1],
+  [0, 0, 1, 0, 1, 0, 1, 0, 0],
+];
+
+//Complexity 0(n2)
+const conditionToWin = (values, pattern) => {
+  for (let i = 0; i < 9; i++) {
+    // 0 && !1 => true
+    if (pattern[i] && !values[i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
 function App() {
   const [board, setBoard] = React.useState(EMPTY_BOARD);
   const [player, setPlayer] = React.useState(1);
+  const [winningPlayer, setWinningPlayer] = React.useState(false);
 
   const tick = (index) => {
+    const newBoard = [
+      ...board.slice(0, index),
+      player,
+      ...board.slice(index + 1),
+    ];
     setPlayer(3 - player);
-    setBoard([...board.slice(0, index), player, ...board.slice(index + 1)]);
+    setBoard(newBoard);
+    const boardValues = newBoard.map((cell) => cell === player);
+    const isWinning = WINNING_STATES.find((pattern) =>
+      conditionToWin(boardValues, pattern)
+    );
+    console.log({ isWinning, boardValues });
+    if (isWinning) {
+      setWinningPlayer(winningPlayer);
+      alert(`player ${player} win`);
+      reset();
+    }
   };
 
   const reset = () => {
